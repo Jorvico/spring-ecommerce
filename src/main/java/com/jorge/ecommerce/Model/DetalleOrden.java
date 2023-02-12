@@ -1,24 +1,66 @@
 package com.jorge.ecommerce.Model;
 
+import java.util.List;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table (name = "detalle")
 public class DetalleOrden {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nombre;
 	private double cantidad;
 	private double precio;
 	private double total;
 	
+	@OneToOne
+	private Orden orden;
+	
+	@OneToMany(mappedBy = "detalleOrden")
+	private List<Producto> producto;
+	
 	public DetalleOrden() {
 	
 	}
 
-	public DetalleOrden(Integer id, String nombre, double cantidad, double precio, double total) {
+
+
+
+
+
+	public void setProducto(List<Producto> producto) {
+		this.producto = producto;
+	}
+
+
+
+
+
+
+	public DetalleOrden(Integer id, String nombre, double cantidad, double precio, double total, Orden orden,
+			List<Producto> producto) {
 		this.id = id;
 		this.nombre = nombre;
 		this.cantidad = cantidad;
 		this.precio = precio;
 		this.total = total;
+		this.orden = orden;
+		this.producto = producto;
 	}
+
+
+
+
+
 
 	public Integer getId() {
 		return id;
@@ -59,6 +101,24 @@ public class DetalleOrden {
 	public void setTotal(double total) {
 		this.total = total;
 	}
+	
+	public Orden getOrden() {
+		return orden;
+	}
+
+	public void setOrden(Orden orden) {
+		this.orden = orden;
+	}
+
+
+	public List<Producto> getProducto() {
+		return producto;
+	}
+
+
+
+
+
 
 	@Override
 	public String toString() {
